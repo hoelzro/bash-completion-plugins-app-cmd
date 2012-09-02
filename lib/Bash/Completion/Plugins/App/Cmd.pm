@@ -24,14 +24,40 @@ sub complete {
 
 __END__
 
-# ABSTRACT: A short description of Bash::Completion::Plugins::App::Cmd
+# ABSTRACT: A Bash::Completion plugin for writing App::Cmd plugins
 
 =head1 SYNOPSIS
 
+  use parent 'Bash::Completion::Plugins::App::Cmd';
+
+  # fill in everything you normally would for Bash::Completion,
+  # except for complete
+
+  sub command_class { 'My::Cmd' } # mandatory
+
 =head1 DESCRIPTION
 
-=head1 FUNCTIONS
+This is a L<Bash::Completion> plugin that assists in writing other
+L<Bash::Completion> plugins for programs that use L<App::Cmd>.  Everything
+is done similar to writing a normal L<Bash::Completion> plugin, except you
+need to define the L</command_class> method rather than the
+L<'Bash::Completion::Plugin'/complete> method.  L</command_class> is
+the name of the class that you use C<use App::Cmd::Setup -app> from.
+
+=head1 METHODS
+
+=head2 complete
+
+Populates the L<Bash::Completion> request with commands from the
+given L<App::Cmd> class.
+
+=head2 command_class
+
+Returns the name of the class that this plugin will extract command
+names from.  This method must be implemented by subclasses.
 
 =head1 SEE ALSO
+
+L<App::Cmd>, L<Bash::Completion>
 
 =cut
